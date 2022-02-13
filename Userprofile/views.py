@@ -4,7 +4,9 @@ from Alluser.models import User
 from .models import *
 from .forms import *
 import json
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
 def dashboard(request):
     Id = request.GET.get('pk')
     print(Id)
@@ -19,6 +21,7 @@ def dashboard(request):
         print(i)
     #alluser = alluser.exclude(id__in=ListBox)
     return render(request,'index.html',{'user':userdetail,'userbio':userBio,'suggestuser':suguser,'friends':friend,'Post':post,'MyPost':mypost})
+@login_required
 def invite(request):
     Id = request.GET.get('pk')
     userdetail = User.objects.get(pk=Id)
@@ -27,6 +30,7 @@ def invite(request):
     friend = UserBio.objects.all_friend(userdetail)[:5]
     mypost = Post.objects.friendpost(userdetail).order_by('-created')[:1]
     return render(request,'invite.html',{'invite_req':invite_req,'MyPost':mypost,'suggestuser':suguser,'friends':friend})
+@login_required
 def friends(request):
     Id = request.GET.get('pk')
     userdetail = User.objects.get(pk=Id)
@@ -34,6 +38,7 @@ def friends(request):
     friend = UserBio.objects.all_friend(Id)
     mypost = Post.objects.friendpost(userdetail).order_by('-created')[:1]
     return render(request,'friends.html',{'suggestuser':suguser,'friends':friend,'MyPost':mypost})
+@login_required
 def myprofile(request):
     Id = request.GET.get('pk')
     print(Id)
@@ -48,7 +53,7 @@ def myprofile(request):
         print(i)
     #alluser = alluser.exclude(id__in=ListBox)
     return render(request,'home.html',{'user':userdetail,'userbio':userBio,'suggestuser':suguser,'friends':friend,'Post':post,'MyPost':mypost})
-
+@login_required
 def removefriend(request):
     if request.method == 'POST':
         user = request.POST.get('friendprofile')
@@ -59,6 +64,7 @@ def removefriend(request):
         Relationship.objects.get(sender=frienduser,receiver=userBio).delete()
         url = '/dashboard/friends/?pk={}'.format(Id)
         return HttpResponseRedirect(url)
+@login_required
 def addfriend(request):
     if request.method == 'POST':
         user = request.POST.get('friendprofile')
@@ -74,6 +80,7 @@ def addfriend(request):
             Relationship.objects.get(sender=frienduser,receiver=userBio).delete()
             url = '/dashboard/friends/?pk={}'.format(Id)
             return HttpResponseRedirect(url)
+@login_required
 def sendfriend(request):
     if request.method == 'POST':
         user = request.POST.get('friendprofile')
@@ -84,6 +91,7 @@ def sendfriend(request):
         Relationship.objects.create(sender=userBio,receiver=frienduser,status='send')
         url = '/dashboard/friends/?pk={}'.format(Id)
         return HttpResponseRedirect(url)
+@login_required
 def pending(request):
     Id = request.GET.get('pk')
     userdetail = User.objects.get(pk=Id)
@@ -92,7 +100,7 @@ def pending(request):
     friend = UserBio.objects.all_friend(userdetail)[:5]
     mypost = Post.objects.friendpost(userdetail).order_by('-created')[:1]
     return render(request,'pending.html',{'invite_req':invite_req,'MyPost':mypost,'suggestuser':suguser,'friends':friend})
-
+@login_required
 def alluser(request):
     Id = request.GET.get('pk')
     userdetail = User.objects.get(pk=Id)
@@ -102,6 +110,7 @@ def alluser(request):
     friend = UserBio.objects.all_friend(userdetail)[:5]
     mypost = Post.objects.friendpost(userdetail).order_by('-created')[:1]
     return render(request,'alluser.html',{'alluser':alluser,'MyPost':mypost,'suggestuser':suguser,'friends':friend,'jsondata':jsondata})
+@login_required
 def friendprofile(request):
     if request.method == 'POST':
         try :
@@ -139,6 +148,7 @@ def friendprofile(request):
                 print(i)
             #alluser = alluser.exclude(id__in=ListBox)
             return render(request,'unknown.html',{'user':userdetail,'friendpro':friendpro,'userbio':userBio,'suggestuser':suguser,'friends':friend,'Post':post,'MyPost':mypost})
+@login_required
 def mutualfriend(request):
     if request.method == 'POST':
         user = request.POST.get('friendprofile')
@@ -158,6 +168,7 @@ def mutualfriend(request):
             print(i)
         #alluser = alluser.exclude(id__in=ListBox)
         return render(request,'mutual.html',{'user':userdetail,'friendpro':friendpro,'userbio':userBio,'suggestuser':suguser,'friends':friend,'Post':post,'MyPost':mypost,'mutual':mutual})
+@login_required
 def unknown(request):
     if request.method == 'POST':
         user = request.POST.get('friendprofile')
@@ -176,6 +187,7 @@ def unknown(request):
             print(i)
             #alluser = alluser.exclude(id__in=ListBox)
         return render(request,'unknown.html',{'user':userdetail,'friendpro':friendpro,'userbio':userBio,'suggestuser':suguser,'Post':post,'MyPost':mypost})
+@login_required
 def createpost(request):
     Id = request.GET.get('pk')
     userdetail = User.objects.get(pk=Id)
@@ -194,6 +206,7 @@ def createpost(request):
             postform.save()
         return render(request,'home.html',{'Postform':postform,'user':userdetail,'userbio':userBio,'suggestuser':suguser,'friends':friend,'Post':post,'MyPost':mypost})
     return render(request,'createpost.html',{'Postform':postform,'user':userdetail,'userbio':userBio,'suggestuser':suguser,'friends':friend,'Post':post,'MyPost':mypost})
+@login_required
 def editprofile(request):
     Id = request.GET.get('pk')
     userdetail = User.objects.get(pk=Id)
