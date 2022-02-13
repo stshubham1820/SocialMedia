@@ -1,0 +1,26 @@
+{% include "header.html" %}
+<div class="row">
+    <h2>Friends Invited</h2>
+    {% for i in invite_req %}
+    <div class="user-profile col-12" style="margin-bottom: 15px; padding: 10px; justify-content: left;" >
+        <img src="/static/images/member-2.png">
+        <div>
+            <form action="/dashboard/addfriend/?pk={{ user.id }}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+                <p>{{ i.id }}</p>
+                <p>{{ i.name }}</p>
+                <span name="friendbio">{{ i.bio }}</span>
+                <button type="submit" style="color: #198754; text-decoration: none; border: none;" name="accept" >+ Accept</button>
+                <button type="submit" style="color: #bb0000; text-decoration: none; border: none;" name="reject" >- Reject</button>
+            </form>
+            <form action="/dashboard/friendprofile/?pk={{ user.id }}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+                <button type="submit" style="color: #1876f2; text-decoration: none; border: none;" >See Profile</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% include "footer.html" %}

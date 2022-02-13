@@ -1,0 +1,116 @@
+{% load static %}
+<html>
+	<head>
+		<link rel="stylesheet" href="/static/css/index.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<body>
+
+
+		<nav>
+			<div class="nav-left">
+				<img src="/static/images/logo.png" class="logo">
+				<ul>
+					<li>
+						<a href="/dashboard/invite/?pk={{ user.id }}"><img  src="/static/images/notification.png" alt="Acceptable Req"></a> 
+					</li>
+					<li>
+						<a href="/dashboard/pending/?pk={{ user.id }}"><img src="/static/images/video.png" alt="Pending Req"></a>
+					</li>
+				</ul>
+			</div>
+			<div class="nav-right">
+				<div class="nav-user-icon online" onclick="settingsMenuToggle();">
+					<img src="/static/images/profile-pic.png">
+				</div>
+			</div>
+
+			<div class="settings-menu">
+				<div id="dark-btn">
+					<span></span>
+				</div>
+				<div class="settings-menu-inner">
+					<div class="user-profile">
+						<img src="/static/images/profile-pic.png">
+						<div>
+							<p>{{ user.name }}</p>
+							<a href="#">See Your Profile</a>
+						</div>
+					</div>
+					<hr>
+					<div class="user-profile">
+						<img src="/static/images/feedback.png">
+						<div>
+							<p>Give Feedback</p>
+							<a href="mailto:st18msd7@gmail.com">ContactMe</a>
+						</div>
+					</div>
+					<hr>
+
+					<div class="settings-links">
+						<img src="/static/images/setting.png" class="settings-icon">
+						<a href="#">Settings & Privacy</a>
+						<img src="/static/images/arrow.png" width="10px">
+					</div>
+					<div class="settings-links">
+						<img src="/static/images/help.png" class="settings-icon">
+						<a href="#">Help & Support</a>
+						<img src="/static/images/arrow.png" width="10px">
+					</div>
+					<div class="settings-links">
+						<img src="/static/images/display.png" class="settings-icon">
+						<a href="#">Display & Accessibility</a>
+						<img src="/static/images/arrow.png" width="10px">
+					</div>
+					<div class="settings-links">
+						<img src="/static/images/logout.png" class="settings-icon">
+						<a href="#">Logout</a>
+						<img src="/static/images/arrow.png" width="10px">
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="left-sidebar">
+				<div class="imp-links">
+					<a href="/dashboard/?pk={{ user.id }}" style="align-self: active;">
+						<img src="/static/images/news.png">
+						Latest news
+					</a>
+					<a href="/dashboard/friends/?pk={{ user.id }}">
+						<img src="/static/images/friends.png">
+						Friends
+					</a>
+					<a href="/dashboard/myprofile/?pk={{ user.id }}">
+						<img src="/static/images/group.png">
+						My Profile
+					</a>
+				</div>
+				<div class="shortcut-links">
+					<p>Recently Joined</p>
+					{% for i in suggestuser %}
+					<div class="user-profile">
+						<img src="/static/images/member-2.png">
+						<div>
+							<form action="/dashboard/sendfriend/?pk={{ user.id }}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="friendprofile" value="{{ i.id }}" >
+								<p>{{ i.id }}</p>
+								<p style="margin: 5px 0px 0px 0px;">{{ i.name }}</p>
+								<span name="friendbio">{{ i.bio }}</span>
+								<button type="submit" style="color: #1876f2; text-decoration: none; border: none;" >+ Follow</button>
+							</form>
+							<form action="/dashboard/notfriend/?pk={{ user.id }}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="friendprofile" value="{{ i.id }}" >
+								<button type="submit" style="color: #1876f2; text-decoration: none; border: none;" >See Profile</button>
+							</form>
+						</div>
+					</div>
+					{% endfor %}
+					<a href="/dashboard/alluser/?pk={{ user.id }}" style="color: #1876f2; margin-top: 15px;">
+						See More
+					</a>
+				</div>
+			</div>

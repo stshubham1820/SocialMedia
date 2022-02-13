@@ -1,0 +1,74 @@
+{% include "header.html" %}
+<div class="row">
+    <div class="search-box" style="background-color: #fff; margin-bottom: 20px;">
+        <img src="/static/images/search.png">
+        <input id="searchbox" type="text" placeholder="Search">
+    </div>
+    <h2>All User</h2>
+    <div id="BOX">
+        {% for i in alluser %}
+        <div class="user-profile col-12" style="margin-bottom: 15px; padding: 10px; justify-content: left;">
+            <img src="/static/images/member-2.png">
+            <div>
+                {% if i in suggestuser %}
+                <form action="/dashboard/sendfriend/?pk={{ user.id }}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+                    <p>{{ i.id }}</p>
+                    <p style="margin: 5px 0px 0px 0px;">{{ i.name }}</p>
+                    <span name="friendbio">{{ i.bio }}</span>
+                    <button type="submit" style="color: #1876f2; text-decoration: none; border: none;" >+ Follow</button>
+                </form>
+                <form action="/dashboard/notfriend/?pk={{ user.id }}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+                    <button type="submit" style="color: #1876f2; text-decoration: none; border: none;" >See Profile</button>
+                </form>
+                {% elif i in friends %}
+                <form action="/dashboard/friendprofile/?pk={{ user.id }}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+                    <p>{{ i.id }}</p>
+                    <p>{{ i.name }}</p>
+                    <span name="friendbio">{{ i.bio }}</span>
+                    <button type="submit" style="color: #bd5113; text-decoration: none; border: none;" >* Friends</button>
+                    <button type="submit" style="color: #136bbd; text-decoration: none; border: none;" name="seeprofile" ># See Profile</button>  
+                </form>
+                {% else %}
+                <form action="/dashboard/notfriend/?pk={{ user.id }}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+                    <p>{{ i.id }}</p>
+                    <p>{{ i.name }}</p>
+                    <span name="friendbio">{{ i.bio }}</span>
+                    <button type="submit" style="color: #acbd13; text-decoration: none; border: none;" >? Waiting...</button>
+                    <button type="submit" style="color: #136bbd; text-decoration: none; border: none;" name="seeprofile" ># See Profile</button>  
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    const List = '{{ jsondata }}'
+    const Data = JSON.parse(List.replace(/&quot;/g,'"'))
+    console.log(Data)
+    const element = document.getElementById('searchbox')
+    let box = document.getElementById('BOX')
+    let Arr = []
+    element.addEventListener('keyup',(e)=>{
+        box.innerHTML = ""
+        Arr = Object.values(element).filter(info=> info['name'].includes(e.target.value))
+        console.log(Arr)
+        if (Arr.length > 0){
+            Arr.map(info=>{
+                box.innerHTML = `${info['name']}`
+            })
+        }
+        else {
+            box.innerHTML = "No Result"
+        }
+    })
+</script>
+{% include "footer.html" %}

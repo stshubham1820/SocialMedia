@@ -1,0 +1,29 @@
+{% include "header.html" %}
+    <div>
+        <h4>Edit Profile</h4>
+        <form action="/dashboard/editprofile/?pk={{ user.id }}" method="post" style="margin: 10px;">
+        {% csrf_token %}
+        <div style="margin: 10px;">
+            <label for="Name">Name : </label>
+            {{Postform.name}}<br>
+        </div>
+        <div style="margin: 10px;">
+            <label for="Bio">Bio : </label>
+            {{Postform.bio}}<br>
+        </div>
+        <div style="margin: 10px;">
+            <label for="Facebook">Facebook : </label>
+            {{Postform.facebook}}<br>
+        </div>
+        <div style="margin: 10px;">
+            <label for="instagram">Instagram : </label>
+            {{Postform.instagram}}<br>
+        </div>
+        <div style="margin: 10px;">
+            <label for="twitter">Twitter : </label>
+            {{Postform.twitter}}<br>
+        </div>
+        <button type="submit" style="padding: 10px; margin: 10px; background-color: rgb(50, 164, 209); border: none; border-radius: 5px;">Edit Profile</button>
+        </form>
+    </div>
+{% include "footer.html" %}

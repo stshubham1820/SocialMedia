@@ -1,0 +1,25 @@
+{% include "header.html" %}
+    <div>
+        <h4>Create Post</h4>
+        <form enctype='multipart/form-data' action="/dashboard/createpost/?pk={{ user.id }}" method="post" style="margin: 10px;">
+        {% csrf_token %}
+        <div style="margin: 10px;">
+            <label for="Title">Title : </label>
+            {{Postform.title}}<br>
+        </div>
+        <div style="margin: 10px;">
+            <label for="Body">Body : </label>
+            {{Postform.body}}<br>
+        </div>
+        <div style="margin: 10px;">
+            <label for="Image">Image : </label>
+            {{Postform.image}}<br>
+        </div>
+        <div style="margin: 10px;">
+            <label for="View">View : </label>
+            {{Postform.view}}<br>
+        </div>
+        <button type="submit" style="padding: 10px; margin: 10px; background-color: rgb(103, 146, 16); border: none; border-radius: 5px;">Create Post</button>
+        </form>
+    </div>
+{% include "footer.html" %}

@@ -1,0 +1,51 @@
+{% load static %}
+<div class="right-sidebar">
+    <h4>Recent Post</h4>
+    
+    <div class="sidebar-title">
+        
+    {% for i in MyPost %}  
+    <div>
+        <p class="post-text">
+            {{ i.title }}
+            
+        </p>
+        <img src="{{ i.image.url }}" class="sidebar-ads">
+    </div>
+    
+    {% endfor %}
+    <a href="#">See All</a>
+    </div>
+    <div class="sidebar-title">
+        <h4>Advertisement</h4>
+        <a href="#">Close</a>
+    </div>
+    <img src="/static/images/advertisement.png" class="sidebar-ads">
+
+    <div class="sidebar-title">
+        <h4>Friend List</h4>
+        <a href="/dashboard/friends/?pk={{ user.id }}">See All</a>
+    </div>
+    {% for i in friends %}
+    <div class="user-profile col-12" style="margin-bottom: 15px; padding: 10px; justify-content: left;" >
+        <img src="/static/images/member-2.png">
+        <div>
+            <form action="/dashboard/friendprofile/?pk={{ user.id }}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+                <p>{{ i.id }}</p>
+                <p style="margin: 5px 0px 0px 0px;">{{ i.name }}</p>
+                <button type="submit" style="color: #1876f2; text-decoration: none; border: none;" >See Profile</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+<div class="footer">
+<p>Copyright 2022</p>
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{% include "header.html" %}
+			<div class="main-content">
+				<div class="story-gallery" style="background-image: url(/static/images/bg-1.jpg); border-radius: 5px;">
+					<div class="col-4">
+						<img style="border-radius: 5px;" src="/static/images/profile-pic.png">
+					</div>
+				</div>
+				<div class="write-post-container">
+					<div class="user-profile">
+						<img src="/static/images/profile-pic.png">
+						<div>
+							<p>{{ friendpro.name }}</p>
+							<small class="mx-4">
+								<i class="fas fa fa-envelope"></i>
+								{{ friendpro.email }}
+							</small>
+						</div>
+					</div>
+					<div class="post-input-container">
+						<h4>Bio</h4>
+						<small>{{ userbio.bio }}</small>
+						<a href="#" style="text-decoration: none; color: grey; margin-bottom: 10px;"></a>
+						<div class="add-post-links mt-2">
+							<a href="{{ userbio.facebook }}">
+								<i style="padding: 5px; color: #1876f2;" class="fas fa fa-facebook fa-2x"></i>
+								Facebook
+							</a>
+							<a href="{{ userbio.instagram }}">
+								<i style="padding: 5px; color:#833AB4;" class="fas fa fa-instagram fa-2x"></i>
+								Instagram
+							</a>
+							<a href="{{ userbio.twitter }}">
+								<i style="padding: 5px; color: #00acee;" class="fas fa fa-twitter fa-2x"></i>
+								Twitter
+							</a>
+							<form action="/dashboard/mutualfriend/?pk={{ user.id }}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="friendprofile" value="{{ friendpro.id }}" >
+								<button type="submit" style="color: #f28118; text-decoration: none; border: none; background: none; padding: 5px; margin: 5px;" >Mutual Friends</button>
+							</form>
+						</div>
+						<form action="/dashboard/removefriend/?pk={{ user.id }}" method="post">
+							{% csrf_token %}
+							<input type="hidden" name="friendprofile" value="{{ friends }}" >
+							<small>Remove Friend</small>  <button type="submit" style="color: #bb0000; text-decoration: none; border: none; padding: 10px; background-color: #fff" >Remove</button>
+						</form>
+					</div>
+				</div>
+                {% for i in Post %}
+				<div class="post-container">
+					<div class="post-row">
+						<div class="user-profile">
+							<img src="/static/images/profile-pic.png">
+							<div>
+								<p>{{ userbio.name }}</p>
+								<span>{{ i.created }}</span><br>
+								<small> Who can Watch : </small><span>{{ i.view }}</span>
+							</div>
+						</div>
+						<a href="#">
+							<i class="fa fa-ellipsis-v"></i>
+						</a>
+					</div>
+					
+					<p class="post-text">
+                        {{ i.body }}
+					</p>
+					<img src="{{ i.image.url }}" class="post-img">
+					<div class="post-row">
+						<div class="activity-icons">
+							<div>
+								<img src="/static/images/like-blue.png">
+								120
+							</div>
+							<div>
+								<img src="/static/images/comments.png">
+								19
+							</div>
+							<div>
+								<img src="/static/images/share.png">
+								120
+							</div>
+						</div>
+						<div class="post-profile-icon">
+							<img src="/static/images/profile-pic.png">
+							<i class="fas fa fa-caret-down"></i>
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+				<button type="button" class="load-more-btn">Load More</button>
+			</div>
+{% include "footer.html" %}

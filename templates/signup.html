@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>SignUp</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="static/css/style.css">
+
+	</head>
+    <!--style="background-image: url(/static/images/SignUp.gif);"-->
+	<body>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-7 col-lg-5">
+					<div class="wrap">
+						<div class="alert alert-warning {{ dis }}" role="alert" id="message">
+							{% for message in messages %}
+							<p>{{ message }}</p>
+							{% endfor %}
+						</div>
+						<div class="img" style="background-image: url(/static/images/SignUp2.gif); margin: 0; padding: 0;"></div>
+						<div class="login-wrap p-4 p-md-5">
+			      	<div class="d-flex">
+			      		<div class="w-100">
+			      			<h3 class="mb-4">Sign Up</h3>
+			      		</div>
+								<div class="w-100">
+									<p class="social-media d-flex justify-content-end">
+										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+									</p>
+								</div>
+			      	</div> 
+						<form method="post" action='' class="signin-form">
+							{% csrf_token %}
+                          <div class="form-group my-3">
+                            <input type="text" class="form-control mb-3" id='Name' name="Name" required>
+                            <label class="form-control-placeholder" for="Name" >Name</label>
+                        </div>
+                          <div class="form-group my-3">
+                            <input type="email" class="form-control mb-3" id='Email' name="Email" required>
+                            <label class="form-control-placeholder" for="Email" >Email</label>
+                        </div>
+                        <div class="form-group my-3">
+                            <input type="tel" class="form-control mb-3" id='MobileNo' name="MobileNo" required>
+                            <label class="form-control-placeholder" for="MobileNo" >Mobile Number</label>
+							<label style="right: 10%;" class="form-control-placeholder" for="Mobile" >+91 **********</label>
+                        </div>
+		            <div class="form-group">
+		              <input id="password-field" type="password" class="form-control" name="password-field" required>
+		              <label class="form-control-placeholder" for="password" >Password</label>
+		              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+		            </div>
+		            <div class="form-group">
+		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign Up</button>
+		            </div>
+		          </form>
+		          <p class="text-center">I am a Member <a data-toggle="tab" href="/">Login</a></p>
+		        </div>
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="static/js/jquery.min.js"></script>
+  	<script src="static/js/main.js"></script>
+
+	</body>
+</html>
+

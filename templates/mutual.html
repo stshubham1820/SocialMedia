@@ -1,0 +1,24 @@
+{% include "header.html" %}
+<div class="row" style="justify-content: left; right: 50%;">
+    <h2>Mutual Friends</h2>
+    {% for i in mutual %}
+    <div class="user-profile col-12" style="margin-bottom: 15px; padding: 10px;" >
+        <img src="/static/images/member-2.png">
+        <div>
+        <form action="/dashboard/removefriend/?pk={{ user.id }}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+            <p>{{ i.id }}</p>
+            <p>{{ i.name }}</p>
+            <span name="friendbio">{{ i.bio }}</span>
+        </form>
+        <form action="/dashboard/friendprofile/?pk={{ user.id }}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="friendprofile" value="{{ i.id }}" >
+            <button type="submit" style="color: #1876f2; text-decoration: none; border: none;" >See Profile</button>
+        </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% include "footer.html" %}
