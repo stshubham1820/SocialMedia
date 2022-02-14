@@ -11,10 +11,10 @@
                 <p>{{ i.id }}</p>
                 <p>{{ i.name }}</p>
                 <span name="friendbio">{{ i.bio }}</span>
-                <button type="submit" style="color: #198754; text-decoration: none; border: none;" name="accept" >+ Accept</button>
+                <button type="submit" style="color: #198754; text-decoration: none; border: none;" name="Accept">+ Accept</button><br>
                 <button type="submit" style="color: #bb0000; text-decoration: none; border: none;" name="reject" >- Reject</button>
             </form>
-            <form action="/dashboard/friendprofile/?pk={{ user.id }}" method="post">
+            <form action="/dashboard/notfriend/?pk={{ user.id }}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="friendprofile" value="{{ i.id }}" >
                 <button type="submit" style="color: #1876f2; text-decoration: none; border: none;" >See Profile</button>

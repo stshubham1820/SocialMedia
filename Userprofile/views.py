@@ -61,9 +61,18 @@ def removefriend(request):
         Id = request.GET.get('pk')
         frienduser = UserBio.objects.get(id=userid.id)
         userBio = UserBio.objects.get(id=Id)
-        Relationship.objects.get(sender=frienduser,receiver=userBio).delete()
-        url = '/dashboard/friends/?pk={}'.format(Id)
-        return HttpResponseRedirect(url)
+        try : 
+            rel = Relationship.objects.filter(sender=frienduser,receiver=userBio).delete()
+            for i in rel:
+                print(rel)
+            url = '/dashboard/friends/?pk={}'.format(Id)
+            return HttpResponseRedirect(url)
+        except Relationship.DoesNotExist:
+            Relationship.objects.filter(sender=userBio,receiver=frienduser).delete()
+            for i in rel:
+                print(rel)
+            url = '/dashboard/friends/?pk={}'.format(Id)
+            return HttpResponseRedirect(url)
 @login_required
 def addfriend(request):
     if request.method == 'POST':
@@ -72,7 +81,7 @@ def addfriend(request):
         Id = request.GET.get('pk')
         frienduser = UserBio.objects.get(id=userid.id)
         userBio = UserBio.objects.get(id=Id)
-        if request.POST.get('accept'):
+        if request.POST.get('accept') == None:
             Relationship.objects.update(sender=frienduser,receiver=userBio,status='accepted')
             url = '/dashboard/friends/?pk={}'.format(Id)
             return HttpResponseRedirect(url)
