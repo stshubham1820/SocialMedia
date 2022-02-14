@@ -59,11 +59,11 @@
     let Arr = []
     element.addEventListener('keyup',(e)=>{
         box.innerHTML = ""
-        Arr = Object.values(element).filter(info=> info['name'].includes(e.target.value))
-        console.log(Arr)
+        Arr = Data.filter(info=> info['name'] && info['name'].includes(e.target.value))
+        console.log('Arr', Arr)
         if (Arr.length > 0){
-            Arr.map(info=>{
-                box.innerHTML = `${info['name']}`
+            Arr.forEach(info=>{
+                box.innerHTML += `${info['name']}<br/>`
             })
         }
         else {
