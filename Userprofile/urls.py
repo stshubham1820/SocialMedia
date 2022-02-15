@@ -17,5 +17,6 @@ urlpatterns = [
     path('notfriend/',views.unknown),
     path('createpost/',views.createpost),
     path('editprofile/',views.editprofile),
+    path('logout/',views.Logout),
 
 ]

@@ -4,6 +4,7 @@ from Alluser.models import User
 from .models import *
 from .forms import *
 import json
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
@@ -234,3 +235,6 @@ def editprofile(request):
             postform.save()
         return render(request,'home.html',{'Postform':postform,'user':userdetail,'userbio':userBio,'suggestuser':suguser,'friends':friend,'Post':post,'MyPost':mypost})
     return render(request,'editprofile.html',{'Postform':postform,'user':userdetail,'userbio':userBio,'suggestuser':suguser,'friends':friend,'Post':post,'MyPost':mypost})
+def Logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')

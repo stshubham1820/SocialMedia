@@ -51,7 +51,7 @@ def signup(request):
                     print("Save",user)
                     messages.success(request,"Registration Sucessful")
                     return render(request,'login.html')
-                return render(request,'signup.html',{'dis':'d-none'})
             except Exception as err :
-                print(err)
+                messages.info(request,"Mobile Number Will Be Like This +91 1234567890")
+                return render(request,'signup.html')
     return render(request,'signup.html',{'dis':'d-none'})
